@@ -1,0 +1,19 @@
+.a{
+  width: 100px;
+  height: 100px;
+  background-color: #d300a0;
+}
+.b{
+  width: 100px;
+  height: 100px;
+  background-color: #4dd300;
+}
+.c{
+  width: 100px;
+  height: 100px;
+  background-color: #0023d3;
+}
+
+.espacio{
+  height: 300px;
+}
