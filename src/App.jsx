@@ -5,12 +5,22 @@ import { TextPlugin } from "gsap/TextPlugin";
 
 function App() {
     useGSAP(() => {
-            gsap.registerPlugin(TextPlugin)
-            gsap.defaults({ease: "none"});
-            const animacion = gsap.timeline({ repeatDelay: 1});
-            if (animacion.isActive()){return;}
-            const animacionFadeout = animacion.to("h1 span", {text: " con más texto de prueba", duration: 2, opacity: 1})
-            animacionFadeout.to("h1 span", {opacity:0})
+        gsap.registerPlugin(TextPlugin)
+        gsap.registerEffect({
+            name:"cambioTexto",
+            effect: (targets, config) => {
+                let tl = gsap.timeline({delay:config.delay});
+                tl.to(targets, {opacity:0, duration:config.duration / 2});
+                tl.add(()=> targets[0].innerText = config.text);
+                tl.to(targets, {opacity:1, duration:config.duration});
+                return tl;
+            },
+            defaults: {duration: 1, ease: "none"},
+            extendTimeline: true
+        })
+        const tl = gsap.timeline({repeatDelay:1});
+        tl.cambioTexto("h1 span", {text: "y ahora cambiamos el texto", delay: 2})
+        tl.cambioTexto("h1 span", {text: "y lo volvemos a cambiar", delay: 2})
         }
     );
     return (
